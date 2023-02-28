@@ -88,7 +88,7 @@ void MovingWindow::pollEvent()
 			{
 				if (e.key.code == sf::Mouse::Button::Left)
 				{
-					m_manager.spawnCells(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)), 690);
+					m_manager.spawnCells(m_window.mapPixelToCoords(sf::Mouse::getPosition(m_window)), 1);
 				}
 			}
 		}

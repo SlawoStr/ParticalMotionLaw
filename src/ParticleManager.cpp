@@ -133,14 +133,14 @@ void ParticleManager::update()
 		m_particles[i].closeNeighbors = Ct;
 		m_particles[i].angle += rotationAngle;
 		m_particles[i].nextPosition = sf::Vector2f{ posStart.x + m_particleSpeed * cos(m_particles[i].angle),posStart.y + m_particleSpeed * sin(m_particles[i].angle) };
+		if (m_particles[i].nextPosition.x < 0.0f || m_particles[i].nextPosition.x > m_simulationBound.x || m_particles[i].nextPosition.y < 0.0f || m_particles[i].nextPosition.y > m_simulationBound.y)
+		{
+			m_particles[i].nextPosition = m_particles[i].position;
+		}
 	}
 	// Update particle positions
 	for (int i = 0; i < m_particles.size(); ++i)
 	{
-		if (m_particles[i].nextPosition.x < 0.0f || m_particles[i].nextPosition.x > m_simulationBound.x || m_particles[i].nextPosition.y < 0.0f || m_particles[i].nextPosition.y > m_simulationBound.y)
-		{
-			continue;
-		}
 		m_particles[i].position = m_particles[i].nextPosition;
 	}
 }
