@@ -3,15 +3,31 @@
 #include <iostream>
 #define PI 3.14159265
 
+/// <summary>
+/// Calculate signum
+/// </summary>
+/// <typeparam name="T">Precision</typeparam>
+/// <param name="val">Value</param>
+/// <returns>Signum result</returns>
 template <typename T> int sgn(T val) {
 	return (T(0) < val) - (val < T(0));
 }
 
+/// <summary>
+/// Convert radians to degrees
+/// </summary>
+/// <param name="a"></param>
+/// <returns></returns>
 inline float degree(float a)
 {
 	return static_cast<float>(a * (180 / PI));
 }
 
+/// <summary>
+/// Convert degree to radians
+/// </summary>
+/// <param name="a"></param>
+/// <returns></returns>
 inline float radians(float a)
 {
 	return static_cast<float>(0.017453292 * a);
@@ -35,15 +51,17 @@ float getDistance(sf::Vector2f fp, sf::Vector2f sp)
 /// <param name="b">Second point of line</param>
 /// <param name="c">Point</param>
 /// <returns>Is point on the right side</returns>
-bool isRight(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c)
+bool isOnRight(sf::Vector2f a, sf::Vector2f b, sf::Vector2f c)
 {
 	return((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) > 0;
 }
 
+////////////////////////////////////////////////////////////
 ParticleManager::ParticleManager(float particleSpeed, float alpha, float beta, float reactRadius, sf::Vector2f simulationBound,int threadNumber) 
 	: m_particleSpeed{ particleSpeed }, m_alpha{ radians(alpha) }, m_beta{ radians(beta) }, m_reactRadius{ reactRadius }, m_simulationBound{simulationBound},m_threadNumber{threadNumber}
 {}
 
+////////////////////////////////////////////////////////////
 void ParticleManager::draw(sf::RenderWindow& window)
 {
 	sf::CircleShape shape;
@@ -84,6 +102,7 @@ void ParticleManager::draw(sf::RenderWindow& window)
 	}
 }
 
+////////////////////////////////////////////////////////////
 void ParticleManager::spawnCells(sf::Vector2f position, int cellNumber)
 {
 	for (int i = 0; i < cellNumber; ++i)
@@ -92,6 +111,7 @@ void ParticleManager::spawnCells(sf::Vector2f position, int cellNumber)
 	}
 }
 
+////////////////////////////////////////////////////////////
 void ParticleManager::update()
 {
 	#pragma omp parallel for num_threads(m_threadNumber)
@@ -113,7 +133,7 @@ void ParticleManager::update()
 			if (distance < m_reactRadius)
 			{
 				Nt++;
-				if (isRight(posStart, posEnd, m_particles[j].position))
+				if (isOnRight(posStart, posEnd, m_particles[j].position))
 				{
 					Rt++;
 				}
@@ -145,6 +165,7 @@ void ParticleManager::update()
 	}
 }
 
+////////////////////////////////////////////////////////////
 void ParticleManager::reduceSimulationBound()
 {
 	m_simulationBound.x -= 1;
@@ -163,6 +184,7 @@ void ParticleManager::reduceSimulationBound()
 	}
 }
 
+////////////////////////////////////////////////////////////
 void ParticleManager::increaseSimulationBound()
 {
 	m_simulationBound.x += 1;
