@@ -1,6 +1,6 @@
 # ParticalMotionLaw
 
-
+Based on "How life emerges from a simple particle motion law: Introducing the Primordial Particle System"    
 
 Controls:   
 P - Pause/Unpause simulation    
