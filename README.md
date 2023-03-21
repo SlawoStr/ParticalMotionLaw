@@ -13,6 +13,9 @@ Based on "How life emerges from a simple particle motion law: Introducing the Pr
 |**Arrow Up/Down**|Change simulation bounds|  
 |**Mouse Left button**|Spawn group of particles(hard coded 690)|  
 
-Simulation controlls, CPU thread controlls and simulation bounds are set by config file in Resources   
+# Settings
 
+Parameters of simulation can be changed via configuration files in resources folder.
+
+# Visualisation
 ![Animation](https://github.com/SlawoStr/ParticalMotionLaw/blob/master/Animation.gif)
